@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="11e-5p-sMp">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--GLKit View Controller-->
+        <scene sceneID="ntU-T4-d3X">
+            <objects>
+                <glkViewController preferredFramesPerSecond="30" id="11e-5p-sMp" customClass="ViewController" customModule="Texture" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9LY-5g-yoT"/>
+                        <viewControllerLayoutGuide type="bottom" id="ftq-dU-wQR"/>
+                    </layoutGuides>
+                    <glkView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" enableSetNeedsDisplay="NO" id="VLr-m8-Jax">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <connections>
+                            <outlet property="delegate" destination="11e-5p-sMp" id="s0A-Xq-pU4"/>
+                        </connections>
+                    </glkView>
+                </glkViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rfe-tB-jbp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2020" y="445"/>
+        </scene>
+        <!--View Controller2-->
+        <scene sceneID="sJN-My-z2V">
+            <objects>
+                <viewController id="yOC-tA-VkA" customClass="ViewController2" customModule="Texture" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QC2-kw-xWT"/>
+                        <viewControllerLayoutGuide type="bottom" id="Imv-zr-YBy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rds-lm-EYm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Px0-DG-dPe">
+                                <rect key="frame" x="164" y="527" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="dungeon_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yc1-aU-H8i">
+                                <rect key="frame" x="123" y="221" width="128" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Yc1-aU-H8i" firstAttribute="top" secondItem="QC2-kw-xWT" secondAttribute="bottom" constant="201" id="mN1-Qm-xIw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="test_image" destination="Yc1-aU-H8i" id="IQa-q6-hjU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BdD-QI-o0E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218" y="445"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="dungeon_01.png" width="128" height="128"/>
+    </resources>
+</document>
