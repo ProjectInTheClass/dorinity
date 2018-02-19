@@ -44,11 +44,12 @@ class GLKUpdater2 : NSObject, GLKViewControllerDelegate {
         //self.glkViewController.cube.updateWithDelta(self.glkViewController.timeSinceLastUpdate)
     }
     func viewUpdate(_ dtY: CGFloat, _ dtZ: CGFloat){
-        self.glkViewController.triangluarPole1.updateWithDelta(dtY, dtZ)
-        self.glkViewController.triangluarPole2.updateWithDelta(dtY, dtZ)
-        self.glkViewController.triangluarPole3.updateWithDelta(dtY, dtZ)
-        self.glkViewController.triangluarPole4.updateWithDelta(dtY, dtZ)
-        self.glkViewController.triangluarPole5.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube1.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube2.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube3.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube4.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube5.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube6.updateWithDelta(dtY, dtZ)
     }
 }
 
@@ -65,11 +66,12 @@ class GLKUpdater3 : NSObject, GLKViewControllerDelegate {
         //self.glkViewController.cube.updateWithDelta(self.glkViewController.timeSinceLastUpdate)
     }
     func viewUpdate(_ dtY: CGFloat, _ dtZ: CGFloat){
-        self.glkViewController.tetrahedron1.updateWithDelta(dtY, dtZ)
-        self.glkViewController.tetrahedron2.updateWithDelta(dtY, dtZ)
-        self.glkViewController.tetrahedron3.updateWithDelta(dtY, dtZ)
-        self.glkViewController.tetrahedron4.updateWithDelta(dtY, dtZ)
-        self.glkViewController.tetrahedron5.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube1.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube2.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube3.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube4.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube5.updateWithDelta(dtY, dtZ)
+        self.glkViewController.cube6.updateWithDelta(dtY, dtZ)
     }
 }
 
@@ -81,11 +83,7 @@ class ViewControllerGL: GLKViewController {
     }
     
     var glkView: GLKView!
-    var glkView2: GLKView!
-    var glkView3: GLKView!
     var glkUpdater: GLKUpdater!
-    var glkUpdater2: GLKUpdater2!
-    var glkUpdater3: GLKUpdater3!
     var shader : BaseEffect!
     var square : Square!
     var cube : Cube!
@@ -105,13 +103,13 @@ class ViewControllerGL: GLKViewController {
     var triangluarPole3 : TriangularPole3!
     var triangluarPole4 : TriangularPole4!
     var triangluarPole5 : TriangularPole5!
-
-
+    
+    
     var imageView : UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("fffefwefawewaefawefa")
+        
         setupGLcontext()
         setupGLupdater()
         setupScene()
@@ -122,6 +120,7 @@ class ViewControllerGL: GLKViewController {
     }
     
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
+        
         //Transfomr4: Viewport: Normalized -> Window
         //glViewport(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)
         //이건 GLKit이 자동으로 해준다
@@ -134,33 +133,15 @@ class ViewControllerGL: GLKViewController {
         glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA))
         
         let viewMatrix : GLKMatrix4 = GLKMatrix4MakeTranslation(0, 0, -7)
-        
-        if dataCenter.selectedIdx == 0 {
-            self.cube1.renderWithParentMoelViewMatrix(viewMatrix)
-            self.cube2.renderWithParentMoelViewMatrix(viewMatrix)
-            self.cube3.renderWithParentMoelViewMatrix(viewMatrix)
-            self.cube4.renderWithParentMoelViewMatrix(viewMatrix)
-            self.cube5.renderWithParentMoelViewMatrix(viewMatrix)
-            self.cube6.renderWithParentMoelViewMatrix(viewMatrix)
-        }
-        else if dataCenter.selectedIdx == 1{
-            self.triangluarPole1.renderWithParentMoelViewMatrix(viewMatrix)
-            self.triangluarPole2.renderWithParentMoelViewMatrix(viewMatrix)
-            self.triangluarPole3.renderWithParentMoelViewMatrix(viewMatrix)
-            self.triangluarPole4.renderWithParentMoelViewMatrix(viewMatrix)
-            self.triangluarPole5.renderWithParentMoelViewMatrix(viewMatrix)
-        }
-        else{
-            self.tetrahedron1.renderWithParentMoelViewMatrix(viewMatrix)
-            self.tetrahedron2.renderWithParentMoelViewMatrix(viewMatrix)
-            self.tetrahedron3.renderWithParentMoelViewMatrix(viewMatrix)
-            self.tetrahedron4.renderWithParentMoelViewMatrix(viewMatrix)
-            self.tetrahedron5.renderWithParentMoelViewMatrix(viewMatrix)
-        }
-        
-        
+        //self.square.renderWithParentMoelViewMatrix(viewMatrix)
+        //   self.cube.renderWithParentMoelViewMatrix(viewMatrix)
+        self.cube1.renderWithParentMoelViewMatrix(viewMatrix)
+        self.cube2.renderWithParentMoelViewMatrix(viewMatrix)
+        self.cube3.renderWithParentMoelViewMatrix(viewMatrix)
+        self.cube4.renderWithParentMoelViewMatrix(viewMatrix)
+        self.cube5.renderWithParentMoelViewMatrix(viewMatrix)
+        self.cube6.renderWithParentMoelViewMatrix(viewMatrix)
     }
-    
     
     
 }
@@ -168,7 +149,6 @@ class ViewControllerGL: GLKViewController {
 extension ViewControllerGL {
     
     func setupGLcontext() {
-    
         glkView = self.view as! GLKView
         glkView.context = EAGLContext(api: .openGLES2)!
         glkView.drawableDepthFormat = .format16         // for depth testing
@@ -176,22 +156,11 @@ extension ViewControllerGL {
     }
     
     func setupGLupdater() {
-        if dataCenter.selectedIdx == 0 {
-            self.glkUpdater = GLKUpdater(glkViewController: self)
-            self.delegate = self.glkUpdater
-        }
-        else if dataCenter.selectedIdx == 1 {
-            self.glkUpdater2 = GLKUpdater2(glkViewController: self)
-            self.delegate = self.glkUpdater2
-        }
-        else {
-            self.glkUpdater3 = GLKUpdater3(glkViewController: self)
-            self.delegate = self.glkUpdater3
-        }
+        self.glkUpdater = GLKUpdater(glkViewController: self)
+        self.delegate = self.glkUpdater
     }
     
     func setupScene() {
-        print("000000000000000000")
         self.shader = BaseEffect(vertexShader: "SimpleVertexShader.glsl", fragmentShader: "SimpleFragmentShader.glsl")
         
         self.shader.projectionMatrix = GLKMatrix4MakePerspective(
@@ -210,44 +179,6 @@ extension ViewControllerGL {
         self.cube6 = Cube6(shader: self.shader, image_url: "test6.png")
         
     }
-    func setupScene2() {
-        print("2222222222222222222222222")
-        self.shader = BaseEffect(vertexShader: "SimpleVertexShader.glsl", fragmentShader: "SimpleFragmentShader.glsl")
-        
-        self.shader.projectionMatrix = GLKMatrix4MakePerspective(
-            GLKMathDegreesToRadians(85.0),
-            GLfloat(self.view.bounds.size.width / self.view.bounds.size.height),
-            1,
-            150)
-        
-        //  self.cube = Cube(shader: self.shader)
-        
-        self.triangluarPole1 = TriangularPole1(shader: self.shader, image_url: "triangle1.png")
-        self.triangluarPole2 = TriangularPole2(shader: self.shader, image_url: "triangle2.png")
-        self.triangluarPole3 = TriangularPole3(shader: self.shader, image_url: "triangle3.png")
-        self.triangluarPole4 = TriangularPole4(shader: self.shader, image_url: "triangle5.png")
-        self.triangluarPole5 = TriangularPole5(shader: self.shader, image_url: "triangle4.png")
-        
-    }
-    func setupScene3() {
-        print("333333333333333333333333")
-        self.shader = BaseEffect(vertexShader: "SimpleVertexShader.glsl", fragmentShader: "SimpleFragmentShader.glsl")
-        
-        self.shader.projectionMatrix = GLKMatrix4MakePerspective(
-            GLKMathDegreesToRadians(85.0),
-            GLfloat(self.view.bounds.size.width / self.view.bounds.size.height),
-            1,
-            150)
-        
-        //  self.cube = Cube(shader: self.shader)
-        
-        self.tetrahedron1 = Tetrahedron1(shader: self.shader, image_url: "pyramid1.png")
-        self.tetrahedron2 = Tetrahedron2(shader: self.shader, image_url: "pyramid2.png")
-        self.tetrahedron3 = Tetrahedron3(shader: self.shader, image_url: "pyramid3.png")
-        self.tetrahedron4 = Tetrahedron4(shader: self.shader, image_url: "pyramid4.png")
-        self.tetrahedron5 = Tetrahedron5(shader: self.shader, image_url: "pyramid5.png")
-        
-    }
     
     func updateScene() {
         
@@ -258,54 +189,29 @@ extension ViewControllerGL {
         self.cube5.loadTexture("test5.png")
         self.cube6.loadTexture("test6.png")
     }
-    func updateScene2() {
-        
-        self.triangluarPole1.loadTexture("triangle1.png")
-        self.triangluarPole2.loadTexture("triangle2.png")
-        self.triangluarPole3.loadTexture("triangle3.png")
-        self.triangluarPole4.loadTexture("triangle5.png")
-        self.triangluarPole5.loadTexture("triangle4.png")
-    }
-    func updateScene3() {
-        
-        self.tetrahedron1.loadTexture("pyramid1.png")
-        self.tetrahedron2.loadTexture("pyramid2.png")
-        self.tetrahedron3.loadTexture("pyramid3.png")
-        self.tetrahedron4.loadTexture("pyramid4.png")
-        self.tetrahedron5.loadTexture("pyramid5.png")
-    }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self.view)
         print("3d : \(touchLocation)")
-    
+        
     }
-
+    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
         let touchLocation = touch.location(in: self.view)
         let previousLocation = touch.previousLocation(in: self.view)
-    
-    
+        
+        
         var locationX = touchLocation.x - previousLocation.x
         var locationY = touchLocation.y - previousLocation.y
-        
-        if dataCenter.selectedIdx == 0 {
-            self.glkUpdater.viewUpdate(locationX*0.01, locationY*0.01)
-        }
-        else if dataCenter.selectedIdx == 1 {
-            self.glkUpdater2.viewUpdate(locationX*0.01, locationY*0.01)
-        }
-        else {
-            self.glkUpdater3.viewUpdate(locationX*0.01, locationY*0.01)
-        }
-        
+        self.glkUpdater.viewUpdate(locationX*0.01, locationY*0.01)
     }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
     }
     
 }
+
 

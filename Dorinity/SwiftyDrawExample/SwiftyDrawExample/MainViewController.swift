@@ -9,20 +9,20 @@
 import UIKit
 
 class MainViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var images = ["menu_1", "menu_2", "menu_3", "menu_4"]
+    var images = ["saveCube3D1", "saveCube3D2", "saveCube3D3"]
     var selectedIdx : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -59,11 +59,11 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             
         }
-
+        
     }
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
@@ -75,6 +75,7 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 if let items = collectionView.indexPathsForSelectedItems {
                     destination.selectedIdx = items[0].row
                     selectedIdx = destination.selectedIdx
+                    dataCenter.selectedIdx = destination.selectedIdx
                 }
                 else{
                     print("dismiss")
@@ -83,5 +84,6 @@ class MainViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
-
+    
 }
+

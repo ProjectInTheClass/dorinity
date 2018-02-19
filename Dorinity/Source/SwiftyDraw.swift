@@ -78,7 +78,7 @@ extension SwiftyDrawViewDelegate {
 
 open class SwiftyDrawView: UIView {
     
-    
+    public var Idx : Int?
     /// Line color for current drawing strokes
     public var lineColor              : UIColor   = UIColor.black
     
@@ -123,16 +123,6 @@ open class SwiftyDrawView: UIView {
     override public init(frame: CGRect) { //frame에 drawView2를 넣어서 처리중.
         super.init(frame: frame)
         
-        let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let url = URL(fileURLWithPath: path).appendingPathComponent("saveTest.png")
-        
-        if let urlImage = UIImage(contentsOfFile: url.path) {
-            self.backgroundColor = UIColor.init(patternImage: urlImage)
-        }
-        else{
-            self.backgroundColor = UIColor.init(patternImage: UIImage(named : "4")!)
-        }
-
     }
     
     
@@ -148,7 +138,7 @@ open class SwiftyDrawView: UIView {
     override open func draw(_ rect: CGRect) {
         let context : CGContext = UIGraphicsGetCurrentContext()!
         context.setLineCap(.round)
-
+        
         for line in pathArray {
             context.setLineWidth(line.width)
             context.setAlpha(line.opacity)
@@ -178,7 +168,7 @@ open class SwiftyDrawView: UIView {
     }
     
     /// touchesMoves implementation to capture strokes
-
+    
     
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard drawingEnabled == true else {
@@ -196,7 +186,7 @@ open class SwiftyDrawView: UIView {
     }
     
     /// touchedEnded implementation to capture strokes
-
+    
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard drawingEnabled == true else {
             return
@@ -222,7 +212,15 @@ open class SwiftyDrawView: UIView {
             pathArray.removeLast()
         }
         else{
-            self.backgroundColor = UIColor.init(patternImage: UIImage(named : "4")!)
+            if(self.Idx==0){
+                self.backgroundColor = UIColor.init(patternImage: UIImage(named : "0")!)
+            }
+            else if(self.Idx==1){
+                self.backgroundColor = UIColor.init(patternImage: UIImage(named : "1")!)
+            }
+            else if(self.Idx==2){
+                self.backgroundColor = UIColor.init(patternImage: UIImage(named : "2")!)
+            }
         }
         
         setNeedsDisplay()
@@ -235,7 +233,7 @@ open class SwiftyDrawView: UIView {
         setNeedsDisplay()
     }
     
-/********************************** Private Functions **********************************/
+    /********************************** Private Functions **********************************/
     
     private func setTouchPoints(_ touch: UITouch,view: UIView) {
         previousPoint = touch.previousLocation(in: view)
@@ -273,14 +271,56 @@ open class SwiftyDrawView: UIView {
         return subpath
     }
     
-    private func addSubPathToPath(_ subpath: CGMutablePath) -> CGMutablePath {
+    public func addSubPathToPath(_ subpath: CGMutablePath) -> CGMutablePath {
         let bounds : CGRect = subpath.boundingBox
         let drawBox : CGRect = bounds.insetBy(dx: -2.0 * lineWidth, dy: -2.0 * lineWidth)
         self.setNeedsDisplay(drawBox)
         return subpath
     }
+    
+    public func setId(_ id: Int){
+        self.Idx = id
+        self.setGround()
+    }
+    
+    public func setGround(){
+        let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        
+        
+        if(self.Idx==0){
+            let url = URL(fileURLWithPath: path).appendingPathComponent("saveTest11.png")
+            let _img = UIImage(named : "0")
+            if let urlImage = UIImage(contentsOfFile: url.path) {
+                self.backgroundColor = UIColor.init(patternImage: urlImage)
+            }
+            else{
+                self.backgroundColor = UIColor.init(patternImage: _img!)
+            }
+        }
+        else if(self.Idx==1){
+            let url = URL(fileURLWithPath: path).appendingPathComponent("saveTest22.png")
+            let _img = UIImage(named : "1")
+            if let urlImage = UIImage(contentsOfFile: url.path) {
+                self.backgroundColor = UIColor.init(patternImage: urlImage)
+            }
+            else{
+                self.backgroundColor = UIColor.init(patternImage: _img!)
+            }
+        }
+        else if(self.Idx==2){
+            let url = URL(fileURLWithPath: path).appendingPathComponent("saveTest33.png")
+            let _img = UIImage(named : "2")
+            if let urlImage = UIImage(contentsOfFile: url.path) {
+                self.backgroundColor = UIColor.init(patternImage: urlImage)
+            }
+            else{
+                self.backgroundColor = UIColor.init(patternImage: _img!)
+            }
+        }
+    }
 }
 
 
 
-    
+
+

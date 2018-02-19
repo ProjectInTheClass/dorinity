@@ -32,6 +32,9 @@
 		9D1CBCB92021B54B00C1D6DA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CBCB42021B54A00C1D6DA /* Model.swift */; };
 		9D1CBCBA2021B54B00C1D6DA /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CBCB52021B54B00C1D6DA /* Square.swift */; };
 		9D1CBCBC2021BBCD00C1D6DA /* ViewControllerGL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1CBCBB2021BBCD00C1D6DA /* ViewControllerGL.swift */; };
+		9D7289A5203AB6BB0060D42B /* Tetrahedron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7289A4203AB6BB0060D42B /* Tetrahedron.swift */; };
+		9D7289A7203AB6D70060D42B /* TriangularPole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7289A6203AB6D70060D42B /* TriangularPole.swift */; };
+		9D7289AD203ABFCE0060D42B /* DataCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7289AC203ABFCE0060D42B /* DataCenter.swift */; };
 		D1A981C1202980C000504333 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A981C0202980C000504333 /* MainViewController.swift */; };
 		D1A981C3202983D700504333 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A981C2202983D700504333 /* CustomCell.swift */; };
 /* End PBXBuildFile section */
@@ -64,6 +67,9 @@
 		9D1CBCB42021B54A00C1D6DA /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		9D1CBCB52021B54B00C1D6DA /* Square.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
 		9D1CBCBB2021BBCD00C1D6DA /* ViewControllerGL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerGL.swift; sourceTree = "<group>"; };
+		9D7289A4203AB6BB0060D42B /* Tetrahedron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tetrahedron.swift; sourceTree = "<group>"; };
+		9D7289A6203AB6D70060D42B /* TriangularPole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangularPole.swift; sourceTree = "<group>"; };
+		9D7289AC203ABFCE0060D42B /* DataCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCenter.swift; sourceTree = "<group>"; };
 		D1A981C0202980C000504333 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D1A981C2202983D700504333 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +130,9 @@
 				1671B1611DE8CBA100ED5239 /* Info.plist */,
 				9D1CBCBB2021BBCD00C1D6DA /* ViewControllerGL.swift */,
 				D1A981C2202983D700504333 /* CustomCell.swift */,
+				9D7289A4203AB6BB0060D42B /* Tetrahedron.swift */,
+				9D7289A6203AB6D70060D42B /* TriangularPole.swift */,
+				9D7289AC203ABFCE0060D42B /* DataCenter.swift */,
 			);
 			path = SwiftyDrawExample;
 			sourceTree = "<group>";
@@ -228,12 +237,15 @@
 				1671B1581DE8CBA100ED5239 /* ViewController.swift in Sources */,
 				D1A981C1202980C000504333 /* MainViewController.swift in Sources */,
 				1671B16A1DE8CC2F00ED5239 /* SwiftyDraw.swift in Sources */,
+				9D7289AD203ABFCE0060D42B /* DataCenter.swift in Sources */,
 				1671B1561DE8CBA100ED5239 /* AppDelegate.swift in Sources */,
 				9D1CBCB62021B54B00C1D6DA /* GLKMatrix+Array.swift in Sources */,
 				9D1CBCB02021B53900C1D6DA /* BaseEffect.swift in Sources */,
 				9D1CBCB82021B54B00C1D6DA /* Vertex.swift in Sources */,
 				9D1CBCBC2021BBCD00C1D6DA /* ViewControllerGL.swift in Sources */,
 				9D1CBCB72021B54B00C1D6DA /* Cube.swift in Sources */,
+				9D7289A7203AB6D70060D42B /* TriangularPole.swift in Sources */,
+				9D7289A5203AB6BB0060D42B /* Tetrahedron.swift in Sources */,
 				1671B16C1DE8D95E00ED5239 /* ColorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +369,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				INFOPLIST_FILE = SwiftyDrawExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.Dorinity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -372,7 +384,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				INFOPLIST_FILE = SwiftyDrawExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.Dorinity;
 				PRODUCT_NAME = "$(TARGET_NAME)";

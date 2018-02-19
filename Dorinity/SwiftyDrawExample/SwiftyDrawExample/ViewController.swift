@@ -42,7 +42,7 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     var lineWidthSlider : UISlider!
     var opacitySlider : UISlider!
     let openGlViewController = ViewControllerGL()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,10 +55,62 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
             switch selectedIdx {
             case 0 :
                 print("0")
+                drawView = SwiftyDrawView(frame: drawView2.frame)
+                drawView.setId(0)
+                drawView.delegate = self
+                print("0000")
+                let _ = openGlViewController.view
+                print("0000")
+                openGlViewController.glkView.frame = containerView.bounds
+                print("0000")
+                containerView.addSubview(openGlViewController.glkView)
+                print("0000")
+                self.view.addSubview(drawView)
+                print("0000")
+                addButtons()
+                print("0000")
+                addSliders()
+                print("0000")
+                openGlViewController.setupGLcontext()
+                print("0000")
+                openGlViewController.setupGLupdater()
+                print("0000")
+                loadCube()
+                print("0000")
+                resetCube()
+                print("0000")
             case 1 :
                 print("1")
+                drawView = SwiftyDrawView(frame: drawView2.frame)
+                drawView.setId(1)
+                drawView.delegate = self
+                
+                let _ = openGlViewController.view
+                openGlViewController.glkView.frame = containerView.bounds
+                containerView.addSubview(openGlViewController.glkView)
+                self.view.addSubview(drawView)
+                addButtons()
+                addSliders()
+                openGlViewController.setupGLcontext()
+                openGlViewController.setupGLupdater()
+                loadCube2()
+                resetCube2()
             case 2:
                 print("2")
+                drawView = SwiftyDrawView(frame: drawView2.frame)
+                drawView.setId(2)
+                drawView.delegate = self
+                
+                let _ = openGlViewController.view
+                openGlViewController.glkView.frame = containerView.bounds
+                containerView.addSubview(openGlViewController.glkView)
+                self.view.addSubview(drawView)
+                addButtons()
+                addSliders()
+                openGlViewController.setupGLcontext()
+                openGlViewController.setupGLupdater()
+                loadCube3()
+                resetCube3()
             case 3:
                 print("3")
             default:
@@ -66,28 +118,18 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
             }
         }
         
-        drawView = SwiftyDrawView(frame: drawView2.frame)
-        drawView.delegate = self
         
-        let _ = openGlViewController.view
-        openGlViewController.glkView.frame = containerView.bounds
-        containerView.addSubview(openGlViewController.glkView)
-        self.view.addSubview(drawView)
-        addButtons()
-        addSliders()
-        openGlViewController.setupGLcontext()
-        openGlViewController.setupGLupdater()
         //openGlViewController.setupScene() // cubeLoad안에 넣었음
-        loadCube()
-        resetCube()
+        
     }
-
+    
     func addButtons() {
         blackButton = ColorButton(frame: CGRect(x: 50, y: self.view.frame.height-200, width: 40, height: 40), color: UIColor.black)
         blackButton.addTarget(self, action: #selector(colorButtonPressed(button:)), for: .touchUpInside)
         self.view.addSubview(blackButton)
         
         whiteButton = ColorButton(frame: CGRect(x: 110, y: self.view.frame.height - 200, width: 40, height: 40), color: UIColor.white)
+        whiteButton.layer.borderWidth = 3
         whiteButton.addTarget(self, action: #selector(colorButtonPressed(button:)), for: .touchUpInside)
         self.view.addSubview(whiteButton)
         
@@ -167,7 +209,12 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     
     func undo() { //addTarget으로 추가됨.
         drawView.removeLastLine()
-        resetCube()
+        if(selectedIdx==0){
+            resetCube()}
+        else if(selectedIdx==1){
+            resetCube2()}
+        else if(selectedIdx==2){
+            resetCube3()}
     }
     
     func back() { // 실제로 back이라고 적힌 곳. 수정 전 deleteDrawing임. selector부분도 바꿨음.
@@ -202,18 +249,18 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         //print("Did begin drawing")
         
         /*
-        UIView.animate(withDuration: 0.5, animations: {
-            self.redButton.alpha = 0.0
-            self.blueButton.alpha = 0.0
-            self.greenButton.alpha = 0.0
-            self.orangeButton.alpha = 0.0
-            self.purpleButton.alpha = 0.0
-            self.yellowButton.alpha = 0.0
-            self.undoButton.alpha = 0.0
-            self.deleteButton.alpha = 0.0
-            self.lineWidthSlider.alpha = 0.0
-            self.opacitySlider.alpha = 0.0
-        })*/
+         UIView.animate(withDuration: 0.5, animations: {
+         self.redButton.alpha = 0.0
+         self.blueButton.alpha = 0.0
+         self.greenButton.alpha = 0.0
+         self.orangeButton.alpha = 0.0
+         self.purpleButton.alpha = 0.0
+         self.yellowButton.alpha = 0.0
+         self.undoButton.alpha = 0.0
+         self.deleteButton.alpha = 0.0
+         self.lineWidthSlider.alpha = 0.0
+         self.opacitySlider.alpha = 0.0
+         })*/
     }
     
     func SwiftyDrawIsDrawing(view: SwiftyDrawView) {
@@ -221,20 +268,26 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     }
     
     func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView) {
-        resetCube()
+        if(selectedIdx==0){
+            resetCube()}
+        else if(selectedIdx==1){
+            print("2222222222222222")
+            resetCube2()}
+        else if(selectedIdx==2){
+            resetCube3()}
         /*
-        UIView.animate(withDuration: 0.5, animations: {
-            self.redButton.alpha = 1.0
-            self.blueButton.alpha = 1.0
-            self.greenButton.alpha = 1.0
-            self.orangeButton.alpha = 1.0
-            self.purpleButton.alpha = 1.0
-            self.yellowButton.alpha = 1.0
-            self.undoButton.alpha = 1.0
-            self.deleteButton.alpha = 1.0
-            self.lineWidthSlider.alpha = 1.0
-            self.opacitySlider.alpha = 1.0
-        })*/
+         UIView.animate(withDuration: 0.5, animations: {
+         self.redButton.alpha = 1.0
+         self.blueButton.alpha = 1.0
+         self.greenButton.alpha = 1.0
+         self.orangeButton.alpha = 1.0
+         self.purpleButton.alpha = 1.0
+         self.yellowButton.alpha = 1.0
+         self.undoButton.alpha = 1.0
+         self.deleteButton.alpha = 1.0
+         self.lineWidthSlider.alpha = 1.0
+         self.opacitySlider.alpha = 1.0
+         })*/
     }
     
     func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
@@ -247,7 +300,7 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         //UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
-       
+        
         return UIImageView(image: image)
     }
     
@@ -263,14 +316,69 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
     
     func loadCube()
     {
+        var filename:String
         print("load")
+        filename = "saveTest.png"
+        if selectedIdx == 0{
+            filename = "saveTest1.png"
+        }
+        else if selectedIdx == 1{
+            filename = "saveTest2.png"
+        }
+        else if selectedIdx == 2{
+            filename = "saveTest3.png"
+        }
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let url = URL(fileURLWithPath: path).appendingPathComponent("saveTest.png")
+        let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
         
         if let urlImage = UIImage(contentsOfFile: url.path) {
             drawView2.backgroundColor = UIColor.init(patternImage: urlImage)
         }
         openGlViewController.setupScene()
+    }
+    func loadCube2()
+    {
+        var filename:String
+        print("load2")
+        filename = "saveTest.png"
+        if selectedIdx == 0{
+            filename = "saveTest1.png"
+        }
+        else if selectedIdx == 1{
+            filename = "saveTest2.png"
+        }
+        else if selectedIdx == 2{
+            filename = "saveTest3.png"
+        }
+        let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
+        
+        if let urlImage = UIImage(contentsOfFile: url.path) {
+            drawView2.backgroundColor = UIColor.init(patternImage: urlImage)
+        }
+        openGlViewController.setupScene2()
+    }
+    func loadCube3()
+    {
+        var filename:String
+        print("load3")
+        filename = "saveTest.png"
+        if selectedIdx == 0{
+            filename = "saveTest1.png"
+        }
+        else if selectedIdx == 1{
+            filename = "saveTest2.png"
+        }
+        else if selectedIdx == 2{
+            filename = "saveTest3.png"
+        }
+        let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
+        
+        if let urlImage = UIImage(contentsOfFile: url.path) {
+            drawView2.backgroundColor = UIColor.init(patternImage: urlImage)
+        }
+        openGlViewController.setupScene3()
     }
     
     func resetCube()
@@ -338,43 +446,180 @@ class ViewController: UIViewController, SwiftyDrawViewDelegate {
         openGlViewController.updateScene()
     }
     
+    func resetCube2()
+    {
+        print("reset2")
+        var testImage:UIImageView
+        testImage = takeScreenshot(view: drawView)
+        var image_r:UIImage // 3
+        var image_u:UIImage // 5
+        var image_l:UIImage // 1
+        var image_d:UIImage // 6
+        var image_c:UIImage // 2
+        image_r = testImage.image!
+        image_u = testImage.image!
+        image_l = testImage.image!
+        image_d = testImage.image!
+        image_c = testImage.image!
+        
+        if let paramImage = testImage.image { // crop한 이미지
+            image_r = crop(image: paramImage, cropRect: CGRect(x: 399, y: 258, width: 504.5-399, height: 367.5-259.5))!
+            image_u = crop(image: paramImage, cropRect: CGRect(x: 213, y: 106, width: 399-213, height: 259.5-107.5))!
+            image_l = crop(image: paramImage, cropRect: CGRect(x: 213-(504.5-399), y: 258, width: 504.5-399, height: 367.5-259.5))!
+            image_d = crop(image: paramImage, cropRect: CGRect(x: 213, y: 365, width: 399-213, height: 475.0-367.5))!
+            image_c = crop(image: paramImage, cropRect: CGRect(x: 213, y: 258, width: 399-213, height: 367.5-259.5))!
+        }
+        //   let image_r = crop(image: testImage.image?, cropRect: )
+        if let data = UIImagePNGRepresentation(image_r){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("triangle4.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image_u){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("triangle1.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image_c){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("triangle2.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image_l){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("triangle5.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image_d){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("triangle3.png")
+            try? data.write(to: url)
+        }
+        openGlViewController.updateScene2()
+    }
+    
+    func resetCube3()
+    {
+        print("reset")
+        var testImage:UIImageView
+        testImage = takeScreenshot(view: drawView)
+        var image1:UIImage // 위
+        var image2:UIImage // 오른쪽
+        var image3:UIImage // 아래
+        var image4:UIImage // 왼쪽
+        var image5:UIImage // 중앙
+        image1 = testImage.image!
+        image2 = testImage.image!
+        image3 = testImage.image!
+        image4 = testImage.image!
+        image5 = testImage.image!
+        
+        if let paramImage = testImage.image { // crop한 이미지
+            image1 = crop(image: paramImage, cropRect: CGRect(x: 216.5, y: 83.5, width: 336-216.5, height: 201.5-83.5))!
+            image2 = crop(image: paramImage, cropRect: CGRect(x: 334, y: 200.5, width: 455-334, height: 319-200.5))!
+            image3 = crop(image: paramImage, cropRect: CGRect(x: 216.5, y: 319, width: 335-216.5, height: 436-319))!
+            image4 = crop(image: paramImage, cropRect: CGRect(x: 97.5, y: 200.5, width: 217.5-97.5, height: 319-200.5))!
+            image5 = crop(image: paramImage, cropRect: CGRect(x: 216.5, y: 200.5, width: 335-216.5, height: 319-200.5))!
+        }
+        //   let image_r = crop(image: testImage.image?, cropRect: )
+        if let data = UIImagePNGRepresentation(image1){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("pyramid1.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image2){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("pyramid2.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image3){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("pyramid3.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image4){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("pyramid4.png")
+            try? data.write(to: url)
+        }
+        if let data = UIImagePNGRepresentation(image5){
+            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let url = URL(fileURLWithPath: path).appendingPathComponent("pyramid5.png")
+            try? data.write(to: url)
+        }
+        openGlViewController.updateScene3()
+    }
+    
     func saveCube()
     {
         print("save")
         var testImage:UIImageView
+        var filename:String
         testImage = takeScreenshot(view: drawView)
         
         //   let image_r = crop(image: testImage.image?, cropRect: )
         if let data = UIImagePNGRepresentation(testImage.image!){
             //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let url = URL(fileURLWithPath: path).appendingPathComponent("saveTest.png")
+            filename = "saveTest.png"
+            if selectedIdx == 0{
+                filename = "saveTest1.png"
+            }
+            else if selectedIdx == 1{
+                filename = "saveTest2.png"
+            }
+            else if selectedIdx == 2{
+                filename = "saveTest3.png"
+            }
+            let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
             try? data.write(to: url)
         }
         
-    
-        /*
-        if let paramImage = takeScreenshot(view: containerView).image{
-            //let saveImg = crop(image: paramImage, cropRect: CGRect(x: containerView.frame.width/2 - 100, y: containerView.frame.height/2-100, width: containerView.frame.width/2, height: containerView.frame.height/2))!
-            if let data = UIImagePNGRepresentation(paramImage){
-            //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-                let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-                let url = URL(fileURLWithPath: path).appendingPathComponent("saveCube3D.png")
-                try? data.write(to: url)
-                print(url.path + " in func")
-            }
-        }
-         */
         
+        /*
+         if let paramImage = takeScreenshot(view: containerView).image{
+         //let saveImg = crop(image: paramImage, cropRect: CGRect(x: containerView.frame.width/2 - 100, y: containerView.frame.height/2-100, width: containerView.frame.width/2, height: containerView.frame.height/2))!
+         if let data = UIImagePNGRepresentation(paramImage){
+         //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+         let url = URL(fileURLWithPath: path).appendingPathComponent("saveCube3D.png")
+         try? data.write(to: url)
+         print(url.path + " in func")
+         }
+         }
+         */
+        var filename2:String
+        print("load")
+        filename2 = "saveCube3D.png"
+        if selectedIdx == 0{
+            filename2 = "saveCube3D1.png"
+        }
+        else if selectedIdx == 1{
+            filename2 = "saveCube3D2.png"
+        }
+        else if selectedIdx == 2{
+            filename2 = "saveCube3D3.png"
+        }
         let paramImage = openGlViewController.glkView.snapshot
         let saveImage = crop(image: paramImage, cropRect: CGRect(x: 73, y: 258, width: 326-73, height: 516-258))
         if let data = UIImagePNGRepresentation(saveImage!){
             //     var path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let url = URL(fileURLWithPath: path).appendingPathComponent("saveCube3D.png")
+            let url = URL(fileURLWithPath: path).appendingPathComponent(filename2)
             try? data.write(to: url)
             print(url.path + " in func")
         }
         
     }
 }
+
